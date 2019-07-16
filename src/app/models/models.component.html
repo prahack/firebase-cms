@@ -1,0 +1,37 @@
+<div class="container">
+    <mat-toolbar style="background-color: #0093af;color:white; ">
+        <span class="fill-remaining-space"></span>
+        <span style="font-size: 30px;"><b>Firebase CMS</b></span>
+        <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div style="margin: 0px 100px">
+        <mat-toolbar style="background-color: #f5f0f0">
+        <mat-icon>list</mat-icon><span style="font-size: 17px">Content Models</span>
+        <span class="fill-remaining-space"></span>
+        <span><button mat-raised-button color="primary" (click)="openDialog()"><span>+ New Model</span>
+        </button></span>
+        </mat-toolbar>
+        <button (click)="getModels()">getmodels</button>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Fields</th>
+            </tr>
+            <tr *ngFor="let doc of modelList" (click)="onClick(doc.id)" style="cursor: pointer">
+                <td>
+                    {{doc.id}}
+                </td>
+                <td>
+                    {{doc.data().path}}
+                </td>
+                <td>
+                    {{doc.data().fields}}
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    
+</div>
