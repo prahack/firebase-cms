@@ -19,8 +19,8 @@
             </tr>
             <tr *ngFor="let row of collectionData">
                 <td *ngFor="let col of collection[0]" style="cursor: pointer" contenteditable="true" 
-                    (keyup)="changeValue($event)" (blur)="updateValue($event)">
-                    {{row.data().col}}
+                    (keyup)="changeValue($event)" (blur)="updateValue($event,row.id,col)" >
+                    {{getValue(row,col)}}
                 </td>
                 <td>
                     <button (click)="remove(row.id)" style="float: right" mat-raised-button color="warn"><mat-icon>delete</mat-icon>Remove</button>

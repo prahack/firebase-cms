@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../shared/data.service';
 import { FireConnectionService } from '../shared/fire-connection.service';
 import { AngularFirestore } from '@angular/fire/firestore'
-import { async } from '@angular/core/testing';
+//import { async } from '@angular/core/testing';
 //import { deflateRawSync } from 'zlib';
-import { delay } from 'q';
+//import { delay } from 'q';
 
 @Component({
   selector: 'app-data',
@@ -143,8 +143,14 @@ export class DataComponent implements OnInit {
     }
   }
 
-  updateValue(event){
+  updateValue(event,rowID,col){
+    console.log(rowID);
+    console.log(col);
     console.log(event.target.textContent);
+    let cityRef = this.firestore.collection(this.colId).doc(rowID);
+    let data={};
+    data[col]=event.target.textContent;
+    cityRef.update(data);
   }
 
   add(){
@@ -189,6 +195,9 @@ export class DataComponent implements OnInit {
         this.collectionData.splice(id, 1);
       }
     }
+  }
 
+  getValue(row,col){
+    return row.data()[col];
   }
 }
