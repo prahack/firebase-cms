@@ -18,16 +18,20 @@
                 <th>Name</th>
                 <th>Path</th>
                 <th>Fields</th>
+                <th style="width: 20px">Edit</th>
             </tr>
-            <tr *ngFor="let doc of modelList" (click)="onClick(doc.id)" style="cursor: pointer">
-                <td>
+            <tr *ngFor="let doc of modelList"  style="cursor: pointer">
+                <td (click)="onClick(doc.id)">
                     {{doc.id}}
                 </td>
-                <td>
+                <td (click)="onClick(doc.id)">
                     {{doc.data().path}}
                 </td>
-                <td>
+                <td (click)="onClick(doc.id)">
                     {{doc.data().fields}}
+                </td>
+                <td>
+                    <button mat-raised-button color="primary" (click)="onEdit(doc.id)"><mat-icon>edit</mat-icon></button>
                 </td>
             </tr>
         </table>

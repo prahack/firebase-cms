@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FireConnectionService } from '../shared/fire-connection.service';
 import { retry, catchError } from 'rxjs/operators';
 import { DataService } from '../shared/data.service';
+import { AngularFirestore } from '@angular/fire/firestore'
+
 
 @Component({
   selector: 'app-models',
@@ -20,7 +22,8 @@ export class ModelsComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private router:Router,
               private fire:FireConnectionService,
-              private dataS:DataService) { 
+              private dataS:DataService,
+              private firestore:AngularFirestore) { 
     this.modelList=this.fire.returnModels();
     console.log(this.modelList);
   }
@@ -54,9 +57,22 @@ export class ModelsComponent implements OnInit {
       if(!(result==null)){
         console.log(result.name);
         console.log(result.collection);
-        return this.router.navigate(['/model-create']);
+
+        let data = {
+          name: result.name,
+          path: result.collection,
+          fields:[]
+        };
+
+        this.firestore.collection('appData').doc(result.name).set(data);
+
+        return this.router.navigate(['/model-create',result.name]);
       }
     });
+  }
+
+  onEdit(docId){
+    return this.router.navigate(['/model-create',docId]);
   }
 
 }
