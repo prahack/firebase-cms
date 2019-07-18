@@ -73,7 +73,8 @@ export class ModelsComponent implements OnInit {
         let data = {
           name: result.name,
           path: result.collection,
-          fields:[]
+          fields:[],
+          datatypes:{}
         };
 
         this.firestore.collection('appData').doc(result.name).set(data);
@@ -85,6 +86,16 @@ export class ModelsComponent implements OnInit {
 
   onEdit(docId){
     return this.router.navigate(['/model-create',docId]);
+  }
+
+  onDelete(docId){
+    for (let entry of this.modelList){
+      if(entry.id==docId){
+        let id =this.modelList.indexOf(entry);
+        this.firestore.collection('appData').doc(docId).delete();
+        this.modelList.splice(id, 1);
+      }
+    }
   }
 
 }

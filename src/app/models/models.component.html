@@ -19,6 +19,7 @@
                 <th>Path</th>
                 <th>Fields</th>
                 <th style="width: 20px">Edit</th>
+                <th style="width: 15px">Delete</th>
             </tr>
             <tr *ngFor="let doc of modelList"  style="cursor: pointer">
                 <td (click)="onClick(doc.id)">
@@ -32,6 +33,9 @@
                 </td>
                 <td>
                     <button mat-icon-button (click)="onEdit(doc.id)"><mat-icon>edit</mat-icon></button>
+                </td>
+                <td>
+                    <button mat-icon-button color="warn" (click)="onDelete(doc.id)"><mat-icon>delete</mat-icon></button>
                 </td>
             </tr>
         </table>

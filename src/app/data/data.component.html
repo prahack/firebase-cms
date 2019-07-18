@@ -15,7 +15,16 @@
         </mat-toolbar>
         <table *ngIf="collectionData !=[]">
             <tr>
-                <th *ngFor="let col of collection[0]">{{col}}</th>
+                <th *ngFor="let col of collection[0]">{{col}} 
+                    <span style="float: right">
+                                <mat-select [(ngModel)]="dataTypes[col]">
+                                    <mat-option *ngFor="let dataT of defaultDataTypes" [value]="dataT.value">
+                                        {{dataT.viewValue}}
+                                    </mat-option>
+                                </mat-select>
+                    </span>
+                    <span style="float: right">{{defaultDataTypes[dataTypes[col]]}}</span>
+                </th>
                 <th style="width :100px"><span style="float: right">Remove</span></th>
             </tr>
             <tr *ngFor="let row of collectionData">

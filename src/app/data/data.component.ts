@@ -14,6 +14,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./data.component.css']
 })
 export class DataComponent implements OnInit {
+  defaultDataTypes= [
+    {value: 'string', viewValue: 'String'},
+    {value: 'number', viewValue: 'Number'},
+    {value: 'checkbox', viewValue: 'Check Box'},
+    {value: 'map', viewValue: 'Map'},
+    {value: 'array', viewValue: 'Array'},
+    {value: 'datatime', viewValue: 'Data Time'},
+    {value: 'geopoint', viewValue: 'Geo Point'},
+    {value: 'database', viewValue: 'Data Base'},
+    {value: 'optionselection', viewValue: 'Option Selection'},
+  ];
+  dataType='';
   editField='';
   docId='';
   colId='';
@@ -22,6 +34,7 @@ export class DataComponent implements OnInit {
   dataFields=[];
   collectionData=[];
   allData=[];
+  dataTypes={};
   constructor(private firestore:AngularFirestore,
               private route: ActivatedRoute,
               private dataS:DataService,
@@ -40,6 +53,7 @@ export class DataComponent implements OnInit {
           console.log(doc.data().fields)
           this.collection.push(doc.data().fields);
           this.colId=doc.data().path;
+          this.dataTypes=doc.data().datatypes;
           console.log('fire lst1');
 
           let citiesRef = this.firestore.collection(doc.data().path);

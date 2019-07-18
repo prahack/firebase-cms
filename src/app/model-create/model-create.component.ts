@@ -16,6 +16,7 @@ export class ModelCreateComponent implements OnInit {
   field='';
   dataType='';
   fields=[];
+  dataTypes={};
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private firestore: AngularFirestore,
@@ -32,6 +33,7 @@ export class ModelCreateComponent implements OnInit {
       } else {
         console.log('Document data:', doc.data());
         this.fields=doc.data().fields;
+        this.dataTypes=doc.data().datatypes;
       }
     })
     err => {
@@ -57,10 +59,14 @@ export class ModelCreateComponent implements OnInit {
         console.log(result.field);
         console.log(result.dataType);
         this.fields.push(result.field);
+        //let en={};
+        //en[result.field]=result.dataType;
+        this.dataTypes[result.field]=result.dataType;
 
         let cityRef = this.firestore.collection('appData').doc(this.modelName);
 
         cityRef.update({fields: this.fields});
+        cityRef.update({datatypes:this.dataTypes});
       }
     });
   }
