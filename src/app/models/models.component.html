@@ -12,7 +12,7 @@
         <span><button mat-raised-button color="primary" (click)="openDialog()"><span>+ New Model</span>
         </button></span>
         </mat-toolbar>
-        <button (click)="getModels()">getmodels</button>
+        <!--button (click)="getModels()">getmodels</button-->
         <table>
             <tr>
                 <th>Name</th>
@@ -31,7 +31,7 @@
                     {{doc.data().fields}}
                 </td>
                 <td>
-                    <button mat-raised-button color="primary" (click)="onEdit(doc.id)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="onEdit(doc.id)"><mat-icon>edit</mat-icon></button>
                 </td>
             </tr>
         </table>

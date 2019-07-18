@@ -7,10 +7,11 @@
     <mat-divider></mat-divider>
     <div style="margin: 0px 100px">
         <mat-toolbar style="background-color: #f5f0f0">
-        <mat-icon>list</mat-icon><span style="font-size: 17px">{{docId}}</span>
-        <span class="fill-remaining-space"></span>
-        <span><button mat-raised-button color="primary" (click)="add()"><span>+ Add Entry</span>
-        </button></span>
+            <button (click)="onHome()" mat-icon-button><mat-icon>home</mat-icon></button>
+            <mat-icon>list</mat-icon><span style="font-size: 17px">{{docId}}</span>
+            <span class="fill-remaining-space"></span>
+            <span><button mat-raised-button color="primary" (click)="add()"><span>+ Add Entry</span>
+            </button></span>
         </mat-toolbar>
         <table *ngIf="collectionData !=[]">
             <tr>

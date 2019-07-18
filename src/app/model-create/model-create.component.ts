@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FieldComponent } from './field/field.component';
-import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-model-create',
@@ -17,7 +18,8 @@ export class ModelCreateComponent implements OnInit {
   fields=[];
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
-              private firestore: AngularFirestore) { 
+              private firestore: AngularFirestore,
+              private router: Router) { 
     let modelName=this.route.snapshot.paramMap.get('modelName');
     this.modelName=modelName;
     console.log(this.modelName);
@@ -61,6 +63,14 @@ export class ModelCreateComponent implements OnInit {
         cityRef.update({fields: this.fields});
       }
     });
+  }
+
+  onViewData(){
+    return this.router.navigate(['/model/data',this.modelName]);
+  }
+
+  onBack(){
+    return this.router.navigate(['']);
   }
 
 }

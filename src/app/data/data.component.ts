@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../shared/data.service';
 import { FireConnectionService } from '../shared/fire-connection.service';
 import { AngularFirestore } from '@angular/fire/firestore'
+import { Router } from '@angular/router';
 //import { async } from '@angular/core/testing';
 //import { deflateRawSync } from 'zlib';
 //import { delay } from 'q';
@@ -24,7 +25,8 @@ export class DataComponent implements OnInit {
   constructor(private firestore:AngularFirestore,
               private route: ActivatedRoute,
               private dataS:DataService,
-              private fire:FireConnectionService) {
+              private fire:FireConnectionService,
+              private router: Router) {
     let id=this.route.snapshot.paramMap.get('docId');
     console.log(id);
     this.docId=id;
@@ -199,5 +201,9 @@ export class DataComponent implements OnInit {
 
   getValue(row,col){
     return row.data()[col];
+  }
+
+  onHome(){
+    return this.router.navigate(['']);
   }
 }

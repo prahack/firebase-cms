@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FireConnectionService } from '../shared/fire-connection.service';
 import { retry, catchError } from 'rxjs/operators';
 import { DataService } from '../shared/data.service';
-import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -23,9 +23,21 @@ export class ModelsComponent implements OnInit {
               private router:Router,
               private fire:FireConnectionService,
               private dataS:DataService,
-              private firestore:AngularFirestore) { 
-    this.modelList=this.fire.returnModels();
-    console.log(this.modelList);
+              private firestore:AngularFirestore) {
+    
+    let citiesRef = this.firestore.collection('appData');
+    citiesRef.get()
+      .subscribe(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          this.modelList.push(doc);
+        });
+        console.log(this.modelList);
+      })
+      err => {
+        console.log('Error getting documents', err);
+      };            
+    
   }
 
   ngOnInit() {
