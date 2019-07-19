@@ -11,7 +11,7 @@ export class FieldComponent implements OnInit {
   dataTypes= [
     {value: 'string', viewValue: 'String'},
     {value: 'number', viewValue: 'Number'},
-    {value: 'checkbox', viewValue: 'Check Box'},
+    {value: 'boolean', viewValue: 'Check Box'},
     {value: 'map', viewValue: 'Map'},
     {value: 'array', viewValue: 'Array'},
     {value: 'datatime', viewValue: 'Data Time'},
