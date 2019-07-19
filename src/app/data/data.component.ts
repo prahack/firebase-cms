@@ -35,6 +35,7 @@ export class DataComponent implements OnInit {
   collectionData=[];
   allData=[];
   dataTypes={};
+  tableData;
   constructor(private firestore:AngularFirestore,
               private route: ActivatedRoute,
               private dataS:DataService,
@@ -54,6 +55,7 @@ export class DataComponent implements OnInit {
           this.collection.push(doc.data().fields);
           this.colId=doc.data().path;
           this.dataTypes=doc.data().datatypes;
+          this.tableData=doc.data();
           console.log('fire lst1');
 
           let citiesRef = this.firestore.collection(doc.data().path);
@@ -201,6 +203,48 @@ export class DataComponent implements OnInit {
 
   }
 
+  addArrayValue(row,col){
+    console.log('fine');
+    if(this.tableData[col]=='string'){
+      row[1][col].push('');
+    }
+    if(this.tableData[col]=='number'){
+      row[1][col].push(0);
+    }
+    if(this.tableData[col]=='boolean'){
+      row[1][col].push(false);
+      let cityRef = this.firestore.collection(this.colId).doc(row[0]);
+      let data={};
+      data[col]=row[1][col];
+      cityRef.update(data);
+    }
+  }
+
+  updateValueArray(event,row,col,i){
+    //row[1][col][i]=event.target.value;
+    if(this.tableData[col]=='string'){
+      row[1][col].splice(i,1);
+      row[1][col].splice(i, 0,event.target.textContent );
+    }
+    if(this.tableData[col]=='number'){
+      console.log(event.target.value);
+      row[1][col].splice(i,1);
+      row[1][col].splice(i, 0,+event.target.value );
+    }
+    if(this.tableData[col]=='boolean'){
+      console.log('true'==event.target.value);
+      //row[1][col][i]=!row[1][col][i];
+      row[1][col].splice(i,1);
+      row[1][col].splice(i, 0,'true'==event.target.value);
+    }
+    let cityRef = this.firestore.collection(this.colId).doc(row[0]);
+    let data={};
+    data[col]=row[1][col];
+    cityRef.update(data);
+    
+    console.log(row[1][col]);
+  }
+
   updateValue(event,row,col){
     let cityRef = this.firestore.collection(this.colId).doc(row[0]);
     let data={};
@@ -209,13 +253,29 @@ export class DataComponent implements OnInit {
       return
     }
     if (this.dataTypes[col]=="number"){
+      console.log('in');
       console.log(+event.target.value);
+      console.log(row[1][col]);
       data[col]=+event.target.value;
+      if(isNaN(+event.target.value)){
+        return
+      }
       cityRef.update(data);
       return
     }
     if (this.dataTypes[col]=="geopoint"){
       console.log(+event.target.value);
+      return
+    }
+    if (this.dataTypes[col]=="map"){
+      console.log(event.target.textContent);
+      console.log(row[1][col]);
+      data[col]=row[1][col];
+      cityRef.update(data);
+      return
+    }
+    if (this.dataTypes[col]=="array"){
+      console.log(row[1][col]);
       return
     }
     console.log(row[0]);
@@ -247,7 +307,11 @@ export class DataComponent implements OnInit {
           break;    
         } 
         case "map": { 
-          dt[entry] = {};
+          let d={}
+          for (let f of this.tableData[entry]){
+            d[f]='';
+          }
+          dt[entry] = d;
           console.log("map"); 
           break; 
         }  
@@ -345,8 +409,8 @@ export class DataComponent implements OnInit {
 
   }
 
-  updateDataType(event,col){
-    console.log(event.target.textContent);
+  updateDataType(eventVal,col){
+    console.log(eventVal);
     console.log(this.dataTypes[col]);
     let cityRef = this.firestore.collection('appData').doc(this.docId);
     let data={};

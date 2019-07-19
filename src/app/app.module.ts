@@ -14,6 +14,7 @@ import { ModelComponent } from './models/model/model.component';
 import { ModelCreateComponent } from './model-create/model-create.component';
 import { DataComponent } from './data/data.component';
 import { FieldComponent } from './model-create/field/field.component';
+import { MapComponent } from './model-create/map/map.component';
 
 const config = {
   apiKey: "AIzaSyDSrdbgebIsyvK4vXeM9JXKAAsY6c-xOqs",
@@ -35,6 +36,7 @@ const config = {
     ModelCreateComponent,
     DataComponent,
     FieldComponent,
+    MapComponent,
     
   ],
   imports: [
@@ -46,8 +48,8 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule
   ],
-  exports:[ModelComponent,FieldComponent],
-  entryComponents: [ModelComponent,FieldComponent],
+  exports:[ModelComponent,FieldComponent,MapComponent],
+  entryComponents: [ModelComponent,FieldComponent,MapComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
