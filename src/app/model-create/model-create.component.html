@@ -32,6 +32,12 @@
                                         {{fi}}
                                     </span>]
                             </span>
+                            <span *ngIf="dataTypes[f]=='optionselection'">
+                                <button mat-stroked-button (click)="openDialogOptionSelection(f)">add options</button>
+                                [<span *ngFor="let op of allData[0][f]">
+                                        {{op}}
+                                    </span>]
+                            </span>
                         </mat-card>
                     </div>
                 </div>

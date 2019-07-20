@@ -278,6 +278,12 @@ export class DataComponent implements OnInit {
       console.log(row[1][col]);
       return
     }
+    if(this.dataTypes[col]=='optionselection'){
+      console.log(row[1][col]);
+      data[col]=row[1][col];
+      cityRef.update(data);
+      return
+    }
     console.log(row[0]);
     console.log(col);
     console.log(event.target.textContent);
@@ -339,7 +345,7 @@ export class DataComponent implements OnInit {
           break;              
         } 
         case "optionselection": { 
-          dt[entry] = "";
+          dt[entry] = this.tableData[entry][0];
           console.log("optionselection"); 
           break;              
         } 

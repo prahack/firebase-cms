@@ -15,6 +15,7 @@ import { ModelCreateComponent } from './model-create/model-create.component';
 import { DataComponent } from './data/data.component';
 import { FieldComponent } from './model-create/field/field.component';
 import { MapComponent } from './model-create/map/map.component';
+import { OptionSelectionComponent } from './model-create/option-selection/option-selection.component';
 
 const config = {
   apiKey: "AIzaSyDSrdbgebIsyvK4vXeM9JXKAAsY6c-xOqs",
@@ -37,6 +38,7 @@ const config = {
     DataComponent,
     FieldComponent,
     MapComponent,
+    OptionSelectionComponent,
     
   ],
   imports: [
@@ -48,8 +50,8 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule
   ],
-  exports:[ModelComponent,FieldComponent,MapComponent],
-  entryComponents: [ModelComponent,FieldComponent,MapComponent],
+  exports:[ModelComponent,FieldComponent,MapComponent,OptionSelectionComponent],
+  entryComponents: [ModelComponent,FieldComponent,MapComponent,OptionSelectionComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

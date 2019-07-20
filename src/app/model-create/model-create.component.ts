@@ -5,6 +5,7 @@ import { FieldComponent } from './field/field.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MapComponent } from './map/map.component';
+import { OptionSelectionComponent } from './option-selection/option-selection.component';
 
 @Component({
   selector: 'app-model-create',
@@ -78,6 +79,10 @@ export class ModelCreateComponent implements OnInit {
           this.allData[0][result.field]=[];
           this.openDialogMap(result.field);
         }
+        if(result.dataType=='optionselection'){
+          this.allData[0][result.field]=[];
+          this.openDialogOptionSelection(result.field);
+        }
 
         cityRef.update({fields: this.fields});
         cityRef.update({datatypes:this.dataTypes});
@@ -139,6 +144,46 @@ export class ModelCreateComponent implements OnInit {
       let data={};
       this.allData[0][f]=flds;
       data[f]=flds;
+      let cityRef = this.firestore.collection('appData').doc(this.modelName);
+      cityRef.update(data);
+    });
+  }
+
+  openDialogOptionSelection(f){
+    let options=[];
+    if(this.allData[0][f].length==0){
+      options=[{value:''}];
+    }else{
+      for (let x of this.allData[0][f]){
+        let d={};
+        d['value']=x;
+        options.push(d);
+      }
+    }
+
+    const dialogRef = this.dialog.open(OptionSelectionComponent, {
+      width: '350px',
+      data: {options:options}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.result = result;
+      console.log('The dialog was closed');
+      console.log(result == null);
+      let ops=[];
+      if(!(result==null)){
+        console.log(result.options);
+        for (let x of result.options){
+          if (x['value'] != ''){
+            ops.push(x['value']);
+          }
+        }
+      }else{
+        return
+      }
+      let data={};
+      this.allData[0][f]=ops;
+      data[f]=ops;
       let cityRef = this.firestore.collection('appData').doc(this.modelName);
       cityRef.update(data);
     });

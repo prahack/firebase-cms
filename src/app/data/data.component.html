@@ -41,10 +41,20 @@
                             background-color:rgba(0, 0, 0, 0);width: 100%; height: 50px;">
                         </span>
 
+                        <span *ngSwitchCase="'optionselection'">
+                            <mat-form-field >
+                                <mat-select [(ngModel)]="row[1][col]" (selectionChange)="updateValue($event,row,col)">
+                                    <mat-option *ngFor="let opn of tableData[col]" [value]="opn">
+                                    {{opn}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </span>
+
                         <span *ngSwitchCase="'array'">
                             <div *ngFor="let x of row[1][col];let i = index"[attr.data-index]="i" style="width: 100%">
 
-                                <div *ngIf="tableData[col]=='string'" style="height: 10px" (blur)="updateValueArray($event,row,col,i)" contenteditable="true" >
+                                <div *ngIf="tableData[col]=='string'" style="height: 20px" (blur)="updateValueArray($event,row,col,i)" contenteditable="true" >
                                     {{x}}
                                 </div>
 
