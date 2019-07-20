@@ -62,9 +62,92 @@ export class DataComponent implements OnInit {
           let allCities = citiesRef.get()
           .subscribe(snapshot => { 
             snapshot.forEach(doc => {
-              this.collectionData.push(doc);
-              this.allData.push([doc.id,doc.data()]);
+              let bool=true;
+              let localData=doc.data();
+              //check all the fields are in the docs
+              let Ref = this.firestore.collection(this.colId).doc(doc.id);
+              let data={};
+              for(let x of this.tableData.fields){
+                if(doc.data()[x]==null){
+                  console.log('error');
+                  switch(this.dataTypes[x]) { 
+                    case "string": { 
+                      data[x] = "";
+                      localData[x]="";
+                      console.log("string"); 
+                      break; 
+                    } 
+                    case "number": { 
+                      data[x] = 0;
+                      localData[x]=0;
+                      console.log("number"); 
+                      break; 
+                    } 
+                    case "boolean": {
+                      data[x] = false;
+                      localData[x]=false;
+                      console.log("boolean"); 
+                      break;    
+                    } 
+                    case "map": { 
+                      let d={}
+                      for (let f of this.tableData[x]){
+                        d[f]='';
+                      }
+                      data[x] = d;
+                      localData[x]=d;
+                      console.log("map"); 
+                      break; 
+                    }  
+                    case "array": {
+                      data[x] = []; 
+                      localData[x]=[];
+                      console.log("array"); 
+                      break;              
+                    } 
+                    case "datetime": { 
+                      data[x] = "";
+                      localData[x]="";
+                      console.log("datetime"); 
+                      break;              
+                    } 
+                    case "geopoint": {
+                      let gp={};
+                      gp['longitude']=0;
+                      gp['latitude']=0;
+                      data[x] = gp;
+                      localData[x]=gp;
+                      console.log("geopoint"); 
+                      break;              
+                    } 
+                    case "database": { 
+                      data[x] = "";
+                      localData[x]="";
+                      console.log("database"); 
+                      break;              
+                    } 
+                    case "optionselection": { 
+                      data[x] = this.tableData[x][0];
+                      localData[x]=this.tableData[x][0];
+                      console.log("optionselection"); 
+                      break;              
+                    } 
+                    default:{
+                      data[x] = "";
+                      localData[x]="";
+                      console.log("error[default]");
+                      break;
+                    }
+                  }
+                  bool=false;
+                }else{
+                  console.log('ok');
+                }
+              }
+              Ref.update(data);
               console.log(doc.id, '=>', doc.data());
+              this.collectionData.push(doc);
+              this.allData.push([doc.id,localData]);
               //console.log(this.collectionData[0].data().field3);
             })
           }

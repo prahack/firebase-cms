@@ -29,7 +29,7 @@
             </tr>
             <tr *ngFor="let row of allData">
                 <td *ngFor="let col of collection[0]" style="cursor: pointer"  
-                    (keyup)="changeValue($event,row,col)" (blur)="updateValue($event,row,col)" >
+                    (keyup)="changeValue($event,row,col)" (blur)="updateValue($event,row,col)" #other_content>
                     <span [ngSwitch]="dataTypes[col]">
 
                         <span *ngSwitchCase="'boolean'" contenteditable="false">
